@@ -1,19 +1,8 @@
-pipeline {
-    agent any
-    triggers {
-        pollSCM('* * * * *')
-    }
-    stages{
-        stage('Build'){
-            steps {
-                sh "docker build -t matheus-cloudopss /var/jenkins_home/Dockerfile}"
-            }
-            post {
-                success {
-                    echo "Now Archiving..."
-                    archiveArtifacts artifacts: "target/*.war"
-                }
-            }
-        }
+node {
+    checkout scm
+    def testImage = docker.build("test-image", "/var/jenkins_home/Dockerfile") 
+
+    testImage.inside {
+        sh 'make test'
     }
 }
