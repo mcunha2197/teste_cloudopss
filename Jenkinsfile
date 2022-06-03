@@ -11,7 +11,7 @@ node {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
 
-        app = docker.build("test-python_flask", "/var/jenkins_home/Dockerfile")
+        app = docker.build("test-python_flask", "/var/jenkins_home/workspace/Dockerfile_flask/Dockerfile")
     }
 
     stage('Test image') {
